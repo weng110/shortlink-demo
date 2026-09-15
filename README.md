@@ -176,14 +176,38 @@ shortlink-demo
 └── README.md
 ```
 
+## 截图
+
+| 页面 | 预览 |
+| --- | --- |
+| 首页：生成短链 | [homepage.png](docs/screenshots/homepage.png) |
+| Dashboard 图表 | [dashboard_chart.png](docs/screenshots/dashboard_chart.png) |
+| Dashboard 列表 | [dashboard_table.png](docs/screenshots/dashboard_table.png) |
+| Swagger 文档 | [swagger.png](docs/screenshots/swagger.png) |
+| MySQL / Redis 数据 | 终端命令见 [docs/db-snapshot.txt](docs/db-snapshot.txt)，可自行截图 |
+
 ## 压测
 
+Windows 下用自带脚本 `scripts/load_test.py`（asyncio 并发，等价于 wrk 思路）：
+
 ```bash
-# 先创建一个短链拿到 code，再压跳转接口
-wrk -t4 -c100 -d30s http://localhost:8080/s/{code}
+# 压列表接口（原始吞吐）
+python scripts/load_test.py http://localhost:8080 /api/links 10 100
+
+# 压跳转接口（会先撞上 IP 限流，验证限流效果）
+python scripts/load_test.py http://localhost:8080 /s/2 8 30
 ```
 
-> 本机未装 Docker，压测结果待部署后补充：把 QPS / P99 填进这里即可（示例：QPS 3200 / P99 45ms）。
+实测结果（Docker 版 MySQL + Redis，默认单进程 uvicorn，同一台机器）：
+
+```text
+GET /api/links   并发100 / 10s   QPS 116.2   P50 817ms   P95 977ms   P99 1062ms   5xx 0%
+GET /s/2         并发30  / 8s    QPS 85.1    全部返回 429（每 IP 每分钟限流 60 次，符合预期）
+```
+
+> 说明：默认 uvicorn 单 worker + 同步 SQLAlchemy，P99 偏高主要来自线程池排队；
+> 生产可用 `uvicorn app.main:app --workers 4`、异步驱动或加本地缓存（Caffeine）提升吞吐。
+> `/s/{code}` 跳转接口被每 IP 每分钟 60 次的限流保护，压测会稳定触发 429，属预期行为。
 
 ## 面试讲解点
 

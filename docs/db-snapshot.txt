@@ -1,0 +1,20 @@
+﻿# 数据快照（docker compose 运行环境）
+
+## MySQL
+docker exec shortlink-mysql mysql -uroot -proot shortlink -e "SELECT id, short_code, long_url, click_count, status, created_at FROM link ORDER BY id;"
+
+id      short_code      long_url        click_count     status  created_at
+1       1       https://www.baidu.com   1       0       2026-09-15 16:39:29
+2       2       https://www.baidu.com   85      1       2026-09-15 16:42:25
+3       3       https://www.bilibili.com        18      1       2026-09-15 16:42:25
+4       4       https://www.zhihu.com   12      1       2026-09-15 16:42:25
+5       5       https://github.com/weng110/shortlink-demo       5       1       2026-09-15 16:42:26
+6       6       https://www.douyin.com  8       1       2026-09-15 16:42:26
+7       7       https://www.taobao.com  5       1       2026-09-15 16:42:26
+
+## Redis
+docker exec shortlink-redis redis-cli keys 'link:*'
+link:code:3  link:code:4  link:code:5  link:code:2  link:code:7  link:code:6
+
+docker exec shortlink-redis redis-cli get link:code:2
+https://www.baidu.com
