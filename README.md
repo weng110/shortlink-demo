@@ -77,6 +77,18 @@ docker compose up -d
 | http://localhost:8080/docs | Swagger 接口文档 |
 | http://localhost:8080/api/health | 健康检查 |
 
+## 本地一键演示（Windows，无需 Docker）
+
+演示模式用 **本机 Redis + SQLite**，一条命令启动：
+
+```powershell
+.\start-demo.ps1
+# 打开 http://localhost:8080
+# 另开终端跑闭环验证：python scripts/demo_e2e.py
+```
+
+> Redis 通过 `winget install taizod1024.redis-windows-fork` 安装；MySQL 由 Docker Compose 提供（正式演示建议走 Docker）。
+
 ## 本地开发（不用 Docker）
 
 ```bash
