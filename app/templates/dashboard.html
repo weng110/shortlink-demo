@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShortLink Demo - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand navbar-dark app-navbar">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/">ShortLink Demo</a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/">生成短链</a>
+        <a class="nav-link active" href="/dashboard">Dashboard</a>
+        <a class="nav-link" href="/docs" target="_blank">API 文档</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h4 class="fw-bold app-title mb-0">点击量看板</h4>
+      <button id="refreshBtn" class="btn btn-outline-primary btn-sm">刷新</button>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body p-4">
+            <h6 class="text-muted mb-3">各短链点击量 Top 10</h6>
+            <div style="height: 320px">
+              <canvas id="clickChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card shadow-sm border-0 rounded-4 h-100">
+          <div class="card-body p-4">
+            <h6 class="text-muted mb-3">概览</h6>
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+              <span class="text-muted">短链总数</span>
+              <span id="statTotal" class="fw-bold">-</span>
+            </div>
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+              <span class="text-muted">总点击量</span>
+              <span id="statClicks" class="fw-bold">-</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-muted">启用的短链</span>
+              <span id="statActive" class="fw-bold">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4 mt-4">
+      <div class="card-body p-4">
+        <h6 class="text-muted mb-3">短链列表</h6>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>短码</th>
+                <th>短链</th>
+                <th>长链接</th>
+                <th class="text-end">点击量</th>
+                <th class="text-end">状态</th>
+                <th class="text-end">创建时间</th>
+                <th class="text-end">操作</th>
+              </tr>
+            </thead>
+            <tbody id="linkTable"></tbody>
+          </table>
+          <div id="emptyTip" class="text-center text-muted py-4 d-none">
+            还没有短链，去 <a href="/">首页</a> 生成一条吧
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

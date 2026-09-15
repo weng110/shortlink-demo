@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShortLink Demo - 短链接生成</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand navbar-dark app-navbar">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/">ShortLink Demo</a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link active" href="/">生成短链</a>
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+        <a class="nav-link" href="/docs" target="_blank">API 文档</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-xl-6">
+        <div class="text-center mb-4">
+          <h1 class="fw-bold app-title">长链接转短链接</h1>
+          <p class="text-muted">输入长链接，一键生成短链，302 跳转 + 点击统计</p>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body p-4">
+            <form id="createForm">
+              <div class="input-group input-group-lg">
+                <input
+                  type="text"
+                  id="longUrl"
+                  class="form-control rounded-start-pill"
+                  placeholder="https://www.baidu.com"
+                  autocomplete="off"
+                />
+                <button type="submit" id="generateBtn" class="btn btn-primary rounded-end-pill px-4">
+                  生成短链
+                </button>
+              </div>
+              <div id="errorMsg" class="text-danger mt-2 small d-none"></div>
+            </form>
+
+            <div id="resultCard" class="mt-4 d-none">
+              <div class="border rounded-3 p-3 result-box">
+                <div class="text-muted small mb-1">生成成功，点击即可跳转</div>
+                <div class="d-flex align-items-center gap-2">
+                  <a id="shortUrl" class="fs-5 fw-semibold text-decoration-none app-link" href="#" target="_blank"></a>
+                  <button id="copyBtn" class="btn btn-sm btn-outline-secondary ms-auto">复制</button>
+                </div>
+                <div class="text-muted small mt-2 text-truncate" id="longUrlPreview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <small class="text-muted">
+            使用 Redis 缓存短链映射 + 点击计数，每 IP 每分钟限流 60 次
+          </small>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

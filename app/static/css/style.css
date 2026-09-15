@@ -1,0 +1,41 @@
+:root {
+  --brand: #4f46e5;
+  --brand-dark: #3730a3;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.app-navbar {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.app-title {
+  color: #1f2937;
+}
+
+.app-link {
+  color: var(--brand);
+  word-break: break-all;
+}
+
+.app-link:hover {
+  color: var(--brand-dark);
+}
+
+.result-box {
+  background: #f8faff;
+  border-color: #e0e7ff !important;
+}
+
+.btn-primary {
+  background-color: var(--brand);
+  border-color: var(--brand);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
