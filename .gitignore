@@ -11,6 +11,7 @@ htmlcov/
 test_*.db
 demo.db
 *.sqlite3
+dump.rdb
 .DS_Store
 idea/
 .vscode/
