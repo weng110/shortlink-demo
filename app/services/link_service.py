@@ -42,8 +42,8 @@ def create_link(db: Session, long_url: str) -> Link:
     """创建短链：插入 MySQL 拿自增 ID -> Base62 生成短码 -> 回写 -> 写 Redis 缓存。"""
     long_url = validate_url(long_url)
 
-    # 先用临时唯一短码占位，拿到自增 ID 后再生成正式短码
-    link = Link(long_url=long_url, short_code=f"tmp-{uuid.uuid4().hex[:16]}")
+    # 先用临时唯一短码占位（16 字符内），拿到自增 ID 后再生成正式短码
+    link = Link(long_url=long_url, short_code=f"tmp-{uuid.uuid4().hex[:12]}")
     db.add(link)
     db.commit()
     db.refresh(link)
